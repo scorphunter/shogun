@@ -119,13 +119,6 @@ class Hierarchical : public DistanceMachine
 		 */
 		bool train_machine(std::shared_ptr<Features> data=NULL) override;
 
-	private:
-		/** Initialize attributes */
-		void init();
-
-		/** Register all parameters (aka this class' attributes) */
-		void register_parameters();
-
 	protected:
 		/// the number of merges in hierarchical clustering
 		int32_t merges;

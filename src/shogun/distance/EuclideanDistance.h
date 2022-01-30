@@ -186,8 +186,6 @@ protected:
 	SGVector<float64_t> m_lhs_squared_norms;
 
 private:
-	/** initlaize by defaults and registers parameters */
-	void register_params();
 
 };
 

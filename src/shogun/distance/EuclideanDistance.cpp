@@ -16,12 +16,16 @@ using namespace shogun;
 
 EuclideanDistance::EuclideanDistance() : Distance()
 {
-	register_params();
+	disable_sqrt=false;
+	reset_precompute();
+	SG_ADD(&disable_sqrt, "disable_sqrt", "If sqrt shall not be applied.");
+	SG_ADD(&m_rhs_squared_norms, "m_rhs_squared_norms", "Squared norms from features of right hand side");
+	SG_ADD(&m_lhs_squared_norms, "m_lhs_squared_norms", "Squared norms from features of left hand side");
 }
 
-EuclideanDistance::EuclideanDistance(const std::shared_ptr<DotFeatures>& l, const std::shared_ptr<DotFeatures>& r) : Distance()
+EuclideanDistance::EuclideanDistance(const std::shared_ptr<DotFeatures>& l, const std::shared_ptr<DotFeatures>& r) : Distance(), EuclideanDistance()
 {
-	register_params();
+
 	init(l, r);
 }
 
@@ -129,14 +133,7 @@ std::shared_ptr<Features> EuclideanDistance::replace_rhs(std::shared_ptr<Feature
 	return previous_rhs;
 }
 
-void EuclideanDistance::register_params()
-{
-	disable_sqrt=false;
-	reset_precompute();
-	SG_ADD(&disable_sqrt, "disable_sqrt", "If sqrt shall not be applied.");
-	SG_ADD(&m_rhs_squared_norms, "m_rhs_squared_norms", "Squared norms from features of right hand side");
-	SG_ADD(&m_lhs_squared_norms, "m_lhs_squared_norms", "Squared norms from features of left hand side");
-}
+
 
 float64_t EuclideanDistance::distance_upper_bounded(int32_t idx_a, int32_t idx_b, float64_t upper_bound)
 {

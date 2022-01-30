@@ -30,22 +30,14 @@ struct pair
 Hierarchical::Hierarchical()
 : DistanceMachine()
 {
-	init();
-	register_parameters();
-}
+    watch_param("merges", &merges);
+	watch_param("dimensions", &dimensions);
+	watch_param("assignment", &assignment, &assignment_len);
+	watch_param("table_size", &table_size);
+	watch_param("pairs", &pairs, &pairs_len);
+	watch_param("merge_distance", &merge_distance, &merge_distance_len);
 
-Hierarchical::Hierarchical(int32_t merges_, std::shared_ptr<Distance> d)
-: DistanceMachine()
-{
-	init();
-	merges = merges_;
-	set_distance(std::move(d));
-	register_parameters();
-}
-
-void Hierarchical::init()
-{
-	merges = 3;
+    merges = 3;
 	dimensions = 0;
 	assignment = NULL;
 	assignment_len = 0;
@@ -54,17 +46,19 @@ void Hierarchical::init()
 	pairs_len = 0;
 	merge_distance = NULL;
 	merge_distance_len = 0;
+
 }
 
-void Hierarchical::register_parameters()
+Hierarchical::Hierarchical(int32_t merges_, std::shared_ptr<Distance> d)
+: DistanceMachine(), Hierarchical()
 {
-	watch_param("merges", &merges);
-	watch_param("dimensions", &dimensions);
-	watch_param("assignment", &assignment, &assignment_len);
-	watch_param("table_size", &table_size);
-	watch_param("pairs", &pairs, &pairs_len);
-	watch_param("merge_distance", &merge_distance, &merge_distance_len);
+
+	merges = merges_;
+	set_distance(std::move(d));
+
 }
+
+
 
 Hierarchical::~Hierarchical()
 {
